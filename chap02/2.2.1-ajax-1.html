@@ -1,0 +1,25 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    // axios.get 내부에 new Promise 가 들어있기 때문에 then(), catch() 사용이 가능
+     axios.get('https://www.zerocho.com/api/get')
+        .then((result) => {
+            console.log(result);
+            console.log(result.data);   // {}
+            console.log(result.status); // 200
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+     // 위 함수를 async/await 방식으로 변경
+    (async () => {
+        try {
+            const result = await axios.get('https://www.zerocho.com/api/get')
+            console.log(result);
+            console.log(result.data);   // {}
+            console.log(result.status); // 200
+        } catch(error) {
+            console.error(error);
+        }
+    })();
+</script>

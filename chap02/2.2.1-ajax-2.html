@@ -1,0 +1,15 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    // POST 방식
+    (async () => {
+        try {
+            const result = await axios.post('https://www.zerocho.com/api/post/json', {
+                name: 'assu',
+                birth: 1984
+            });
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+    })();
+</script>

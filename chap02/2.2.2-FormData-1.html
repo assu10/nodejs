@@ -1,0 +1,35 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const formData = new FormData();
+    formData.append('name', 'assu');
+    formData.append('item', 'orange');
+    formData.append('item', 'melon');
+
+    formData.has('item');   // true
+    formData.has('money');  // false;
+
+    formData.get('item');   // orange
+    formData.getAll('item');    // ['orange', 'melon'];
+
+    formData.append('family', ['mom', 'brother']);
+    formData.get('family'); // mom brother
+
+    formData.delete('family');
+    formData.get('family'); // null
+
+    formData.set('item', 'apple');
+    formData.getAll('item');    // ['apple']
+
+    (async () => {
+        try {
+            const formData2 = new FormData();
+            formData2.append('name', 'assu');
+            formData2.append('birth', 1984);
+            const result = await axios.post('https://www.zerocho.com/api/post/formdata', formData2);
+            console.log(result);
+            console.log(result.data);
+        } catch (error) {
+            console.error(error);
+        }
+    })();
+</script>
