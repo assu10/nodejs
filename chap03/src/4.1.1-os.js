@@ -22,14 +22,14 @@ console.log('os.totalmem():', os.totalmem()); // 전체 메모리 용량
 
 /*
 운영체제 정보---------
-  os.arch(): x64
+os.arch(): x64
 os.platform(): darwin
 os.type(): Darwin
 os.uptime(): 1229797
-os.hostname(): Juhyunui-MacBookPro.local
+os.hostname(): -MacBookPro.local
 os.release(): 20.6.0
 경로------------
-  os.homedir(): /Users/juhyunlee
+  os.homedir(): /Users/
 os.tmpdir(): /var/folders/52/152mnlz94mq4pv238l5q91gm0000gn/T
 cpu 정보-------------
   os.cpus(): [
