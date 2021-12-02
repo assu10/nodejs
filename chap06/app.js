@@ -55,8 +55,16 @@ app.get('/upload', (req, res) => {
 });
 
 // 하나의 파일만 업로드 하는 경우
-app.post('/upload', upload.single('imagename'), (req, res) => {
+/*app.post('/upload', upload.single('imagename'), (req, res) => {
   console.log('req.file: ', req.file);
+  console.log('req.body: ', req.body);
+  res.send('ok');
+});*/
+
+// input 태그의 name 이 동일한 여러 개의 파일을 업로드하는 경우
+app.post('/upload', upload.array('imagename'), (req, res) => {
+  console.log('req.file: ', req.file);
+  console.log('req.files: ', req.files);
   console.log('req.body: ', req.body);
   res.send('ok');
 });
