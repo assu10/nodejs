@@ -6,8 +6,17 @@
 </form>-->
 
 <!-- input 태그의 name 이 동일한 여러 개의 파일을 업로드하는 경우 -->
+<!--
 <form id="form" action="/upload" method="post" enctype="multipart/form-data">
   <input type="file" name="imagename" multiple />
+  <input type="text" name="title" />
+  <button type="submit">업로드</button>
+</form>-->
+
+<!-- input 태그의 name 이 다른 여러 개의 파일을 업로드하는 경우 -->
+<form id="form" action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="imagename1" />
+  <input type="file" name="imagename2" />
   <input type="text" name="title" />
   <button type="submit">업로드</button>
 </form>
