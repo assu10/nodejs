@@ -40,6 +40,7 @@ app.use(
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
+/*
 // 위 라우터에 매핑되지 않으면 404 에러 (미들웨어는 위에서 아래로 순서대로 실행되므로)
 app.use((req, res, next) => {
   res.status(404).send('NOT FOUND.');
@@ -49,6 +50,22 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).send(err.message);
+});
+ */
+
+// 위 라우터에 매핑되지 않으면 404 에러 (미들웨어는 위에서 아래로 순서대로 실행되므로)
+app.use((req, res, next) => {
+  const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
+});
+
+// 에러 핸들러
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.status(err.status || 500);
+  res.render('error'); // error.html 렌더링
 });
 
 app.listen(app.get('port'), () => {
