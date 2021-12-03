@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
 });*/
 
 // 1.3. 라우터 주소 표현
-router.get('/me/:id', (req, res) => {
+/*router.get('/me/:id', (req, res) => {
   res.send('me~');
   console.log('req.params: ', req.params);
   console.log('req.query: ', req.query);
@@ -45,6 +45,24 @@ router.get('/me/haha', (req, res) => {
   res.send('실행되지 않음');
   console.log('req.params: ', req.params);
   console.log('req.query: ', req.query);
+});*/
+
+// 1.5. `router.route` 혹은 `app.route`
+/*router.get('/abc', (req, res) => {
+  res.send('GET /abc');
 });
+
+router.post('/abc', (req, res) => {
+  res.send('POST /abc');
+});*/
+
+router
+  .route('/abc')
+  .get((req, res) => {
+    res.send('GET /abc');
+  })
+  .post((req, res) => {
+    res.send('POST /abc');
+  });
 
 module.exports = router;
