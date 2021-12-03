@@ -34,7 +34,7 @@ app.use(
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
-// 위 라우터에 매핑되지 않으면 404 에러
+// 위 라우터에 매핑되지 않으면 404 에러 (미들웨어는 위에서 아래로 순서대로 실행되므로)
 app.use((req, res, next) => {
   res.status(404).send('NOT FOUND.');
 });
