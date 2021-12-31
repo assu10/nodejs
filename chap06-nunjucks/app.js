@@ -13,7 +13,7 @@ const userRouter = require('./routes/users');
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
-app.set('view engine', 'html');
+app.set('views engine', 'html');
 nunjucks.configure('views', {
   express: app,
   watch: true,
