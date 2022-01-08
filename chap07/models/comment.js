@@ -28,7 +28,8 @@ module.exports = class Comment extends Sequelize.Model {
       },
     );
   }
-  // 다른 모델과의 관계
+  // 다른 모델과의 관계, commenter 라는 FK 컬럼 생성
+  // foreignKey 를 설정하지 않으면 UserId (모델명+기본키) 로 FK 컬럼 생성
   static associate(db) {
     db.Comment.belongsTo(db.User, { foreignKey: 'commenter', targetKey: 'id' });
   }
