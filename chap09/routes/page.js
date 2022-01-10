@@ -1,5 +1,6 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { Post, User } = require('../models');
 
 const router = express.Router();
 
@@ -24,12 +25,24 @@ router.get('/join', isNotLoggedIn, (req, res) => {
   res.render('join', { title: '회원가입 - ASSU' });
 });
 
-router.get('/', (req, res, next) => {
-  const twits = [];
-  res.render('main', {
-    title: 'ASSU',
-    twits,
-  });
+// 메인 페이지 로딩 + 게시글도 함께 로딩
+router.get('/', async (req, res, next) => {
+  try {
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'nick'],
+      },
+      order: [['createdAt', 'DESC']],
+    });
+    res.render('main', {
+      title: 'ASSU',
+      twits: posts,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 });
 
 module.exports = router;
