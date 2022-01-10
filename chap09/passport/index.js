@@ -19,7 +19,49 @@ module.exports = () => {
   // 앞으로 req.user 를 통해 로그인한 사용자의 정보 조회 가능
   passport.deserializeUser((id, done) => {
     console.log('passport.deserializeUser');
-    User.findOne({ where: { id } })
+    // 사용자 정보 조회 시 팔로워와 팔로잉 목록도 함께 조회
+    console.log('-----include user.findOne');
+    /*
+    *  SELECT `User`.`id`, `User`.`email`, `User`.`nick`, `User`.`password`, `User`.`provider`,
+        `User`.`snsId`, `User`.`createdAt`, `User`.`updatedAt`, `User`.`deletedAt`, `Followers`.`id` AS `Followers.id`,
+        `Followers`.`nick` AS `Followers.nick`, `Followers->follows`.`createdAt` AS `Followers.follows.createdAt`,
+        `Followers->follows`.`updatedAt` AS `Followers.follows.updatedAt`,
+        `Followers->follows`.`followingId` AS `Followers.follows.followingId`,
+        `Followers->follows`.`followerId` AS `Followers.follows.followerId`,
+        `Followings`.`id` AS `Followings.id`, `Followings`.`nick` AS `Followings.nick`,
+        `Followings->follows`.`createdAt` AS `Followings.follows.createdAt`,
+        `Followings->follows`.`updatedAt` AS `Followings.follows.updatedAt`,
+        `Followings->follows`.`followingId` AS `Followings.follows.followingId`,
+        `Followings->follows`.`followerId` AS `Followings.follows.followerId`
+ FROM `users` AS `User`
+     LEFT OUTER JOIN
+     (
+         `follows` AS `Followers->follows` INNER JOIN `users` AS `Followers` ON `Followers`.`id` = `Followers->follows`.`followerId`
+     ) ON `User`.`id` = `Followers->follows`.`followingId`
+              AND (`Followers`.`deletedAt` IS NULL)
+     LEFT OUTER JOIN
+     (
+         `follows` AS `Followings->follows` INNER JOIN `users` AS `Followings` ON `Followings`.`id` = `Followings->follows`.`followingId`
+     ) ON `User`.`id` = `Followings->follows`.`followerId`
+              AND (`Followings`.`deletedAt` IS NULL)
+ WHERE (`User`.`deletedAt` IS NULL AND `User`.`id` = 1);
+
+    * */
+    User.findOne({
+      where: { id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nick'],
+          as: 'Followers',
+        },
+        {
+          model: User,
+          attributes: ['id', 'nick'],
+          as: 'Followings',
+        },
+      ],
+    })
       .then(user => done(null, user))
       .catch(err => done(err));
   });

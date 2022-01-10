@@ -15,7 +15,8 @@ module.exports = class Post extends Sequelize.Model {
       },
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
+        underscored: false,
         modelName: 'Post',
         tableName: 'posts',
         paranoid: false,
