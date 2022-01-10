@@ -17,8 +17,8 @@ module.exports = () => {
       async (email, password, done) => {
         try {
           const existUser = await User.findOne({ where: { email } });
-          console.log('existUser.password: ', existUser.password);
-          console.log('password: ', password);
+          console.log('existUser.password: ', existUser.password); // $2b$12$AucHY01QpFdQUsh4qjzaMuC9.AMkfhMVrNa5maNfb0MkwjUJoMALm
+          console.log('password: ', password); // 1234
           if (existUser) {
             const passwordCompare = await bcrypt.compare(
               password,

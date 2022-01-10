@@ -9,6 +9,8 @@ const passport = require('passport');
 
 dotenv.config();
 const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
+
 const { sequelize } = require('./models');
 
 const passportConfig = require('./passport'); // require('./passport/index.js') 와 동일
@@ -59,6 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 // 위 라우터에 매핑되지 않으면 404 에러 (미들웨어는 위에서 아래로 순서대로 실행되므로)
 app.use((req, res, next) => {
